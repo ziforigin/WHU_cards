@@ -10,6 +10,7 @@ pip install -r requirements.txt
 pytest -s -v main.py
 
 To add decks you want to download, add them to WHU_cards/resources/decks_list.json
+
 To change width\height\number of cards on a sheet change settings in WHU_cards/resources/config.json
 
 All output will be stored in WHU_cards/output
