@@ -132,6 +132,22 @@ class Tests:
         for i in range(0, len(file_list), length):
             yield file_list[i:i + length]
 
+    def generate_backs_of_cards(self, back_file_name, card_width, card_height, gap_size, cards_in_row, cards_on_page):
+        back = os.path.join(resources_folder, back_file_name)
+        images = []
+        counter = 0
+        while counter < 16:
+            images.append(back)
+            counter += 1
+        folder_name = back_file_name.split('.')
+        folder_name = folder_name[0]
+        if "objective" in folder_name:
+            color = (158, 129, 97)
+        elif "power" in folder_name:
+            color = (65, 73, 90)
+        self.image_combiner(folder_name, images, (card_width, card_height), cards_in_row, cards_on_page, gap_size, color)
+
+
     def test_download_all_cards_from_json(self, browser):
         self.load_config()
         self.create_folders(output_folder, [decks_folder, cards_folder, for_printing_folder])
@@ -144,3 +160,9 @@ class Tests:
         self.save_all_cards_images_of_all_decks()
         self.merge_to_print_all_decks(int(config['card_width']), int(config['card_height']), int(config['gap_size']),
                                       int(config['cards_in_row']), int(config['cards_on_page']))
+        self.generate_backs_of_cards("objective-back.png", int(config['card_width']), int(config['card_height']), int(config['gap_size']),
+                                      int(config['cards_in_row']), int(config['cards_on_page']))
+        self.generate_backs_of_cards("power-back.png", int(config['card_width']), int(config['card_height']),
+                                     int(config['gap_size']),
+                                     int(config['cards_in_row']), int(config['cards_on_page']))
+
