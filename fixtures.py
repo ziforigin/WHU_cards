@@ -1,12 +1,12 @@
 from selenium import webdriver
 import pytest
+import system
 
 
 @pytest.fixture
 def browser():
     print("\nstart browser for test..")
-    System.setProperty("webdriver.chrome.driver", "~/Downloads/WHU_cards/chromedriver")
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(executable_path=r"~/Downloads/WHU_Cards/chromedriver")
     yield browser
     print("\nquit browser..")
     browser.quit()
