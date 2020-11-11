@@ -1,7 +1,5 @@
 from selenium import webdriver
 import pytest
-import system
-
 
 @pytest.fixture
 def browser():
