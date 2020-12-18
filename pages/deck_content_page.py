@@ -7,7 +7,7 @@ output_folder = os.path.join(os.path.dirname(__file__), './../output')
 decks_folder = os.path.join(output_folder, 'decks')
 resources_folder = os.path.join(os.path.dirname(__file__), './../resources')
 cards_folder = os.path.join(output_folder, 'cards')
-for_printing_folder = os.path.join(output_folder, 'for_printing')
+for_printing_folder = os.path.join(output_folder, 'beastgrave_universal_3x3')
 
 class Deck_content_page:
 

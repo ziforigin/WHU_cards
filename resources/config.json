@@ -1,7 +1,7 @@
 {
     "card_width": "532",
     "card_height": "744",
-    "gap_size": "10",
-    "cards_in_row": "4",
-    "cards_on_page": "16"
+    "gap_size": "2",
+    "cards_in_row": "3",
+    "cards_on_page": "9"
 }

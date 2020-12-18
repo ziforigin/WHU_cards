@@ -17,7 +17,7 @@ output_folder = os.path.join(os.path.dirname(__file__), './output')
 decks_folder = os.path.join(output_folder, 'decks')
 resources_folder = os.path.join(os.path.dirname(__file__), './resources')
 cards_folder = os.path.join(output_folder, 'cards')
-for_printing_folder = os.path.join(output_folder, 'for_printing')
+for_printing_folder = os.path.join(output_folder, 'shadespire_faction_3x3')
 
 class Tests:
 
@@ -33,6 +33,10 @@ class Tests:
         file_path = os.path.join(decks_folder, file_name)
         with open(file_path, 'w') as json_file:
             json.dump(deck_obj, json_file, cls=JsonEncoder, indent=4)
+
+    def create_output_folder(self):
+        if not os.path.exists(output_folder):
+            os.mkdir(output_folder)
 
     def create_folders(self, directory_path, folders_list):
         for folder in folders_list:
@@ -110,10 +114,10 @@ class Tests:
         canvas_width = card_size[0] * cards_in_row + margin * 2
         canvas_height = card_size[1] * int(cards_on_page/cards_in_row) + margin * 2
         chunk_counter = 0
-        images = list(self.chunks(images, 16))
+        images = list(self.chunks(images, cards_on_page))
         for big_chunk in images:
             new_image = Image.new('RGBA', (canvas_width, canvas_height), color)
-            cards_row = list(self.chunks(big_chunk, 4))
+            cards_row = list(self.chunks(big_chunk, cards_in_row))
             for i in range(len(cards_row)):
                 for j in range(len(cards_row[i])):
                     picture = Image.open(cards_row[i][j], mode="r")
@@ -136,7 +140,7 @@ class Tests:
         back = os.path.join(resources_folder, back_file_name)
         images = []
         counter = 0
-        while counter < 16:
+        while counter < cards_on_page:
             images.append(back)
             counter += 1
         folder_name = back_file_name.split('.')
@@ -150,7 +154,9 @@ class Tests:
 
     def test_download_all_cards_from_json(self, browser):
         self.load_config()
+        self.create_output_folder()
         self.create_folders(output_folder, [decks_folder, cards_folder, for_printing_folder])
+
         for deck in self.get_all_decks_urls_from_deck_list_file():
             deck_content_page = Deck_content_page(browser)
             deck_content_page.open_deck_page(deck)
@@ -158,6 +164,7 @@ class Tests:
             deck_obj = card.Deck(deck, cards_dict)
             self.save_deck_as_json(deck, deck_obj)
         self.save_all_cards_images_of_all_decks()
+
         self.merge_to_print_all_decks(int(config['card_width']), int(config['card_height']), int(config['gap_size']),
                                       int(config['cards_in_row']), int(config['cards_on_page']))
         self.generate_backs_of_cards("objective-back.png", int(config['card_width']), int(config['card_height']), int(config['gap_size']),
