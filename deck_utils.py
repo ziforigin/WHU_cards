@@ -18,7 +18,7 @@ def get_all_decks_urls_from_deck_list_file(resources_folder):
         return chosen_decks
 
 
-def load_deck(deck_name: str) -> Deck:
+def load_deck(deck_name: str, decks_folder: str) -> Deck:
     deck_name += '.json'
     file = os.path.join(decks_folder, deck_name)
     with open(file, 'r') as opened_file:

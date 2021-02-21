@@ -29,8 +29,8 @@ class CardsConfig:
 
     def __init__(self, path_to_config):
         config = load_config(path_to_config)
-        self.card_width = config['CARD_PROPERTIES']['card_width']
-        self.card_height = config['CARD_PROPERTIES']['card_height']
-        self.gap_size = config['PAPER_SHEET_PROPERTIES']['gap_size']
-        self.cards_in_row = config['PAPER_SHEET_PROPERTIES']['cards_in_row']
-        self.cards_on_page = config['PAPER_SHEET_PROPERTIES']['cards_on_page']
+        self.card_width = int(config['CARD_PROPERTIES']['card_width'])
+        self.card_height = int(config['CARD_PROPERTIES']['card_height'])
+        self.gap_size = int(config['PAPER_SHEET_PROPERTIES']['gap_size'])
+        self.cards_in_row = int(config['PAPER_SHEET_PROPERTIES']['cards_in_row'])
+        self.cards_on_page = int(config['PAPER_SHEET_PROPERTIES']['cards_on_page'])
