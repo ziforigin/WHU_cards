@@ -38,15 +38,16 @@ def merge_all_cards_to_print(deck_object, objective_cards_list, gambit_cards_lis
             gambit_cards_list.append(os.path.join(output_folder, card.image_url))
 
 
-def image_combiner(name: str, images_list, config: CardsConfig, file_paths, color=(255, 255, 255)):
+def image_combiner(name: str, images_list, config: CardsConfig, file_paths: FilePaths, color=(255, 255, 255)):
     y_offset = 0
-    canvas_height = config.card_height * (config.cards_on_page / config.cards_in_row) + config.gap_size * 2
-    canvas_width = config.card_width * config.cards_in_row + config.gap_size * 2
+    canvas_height = int(config.card_height * (config.cards_on_page / config.cards_in_row) + config.gap_size * 2)
+    canvas_width = int(config.card_width * config.cards_in_row + config.gap_size * 2)
     chunk_counter = 0
     images = list(chunks(images_list, config.cards_on_page))
+    canvas_size = tuple([canvas_width, canvas_height])
     card_size: tuple = tuple([config.card_width, config.card_height])
     for big_chunk in images:
-        new_image = Image.new('RGBA', card_size, color)
+        new_image = Image.new('RGBA', canvas_size, color)
         cards_row = list(chunks(big_chunk, config.cards_in_row))
         for i in range(len(cards_row)):
             for j in range(len(cards_row[i])):
@@ -63,7 +64,7 @@ def image_combiner(name: str, images_list, config: CardsConfig, file_paths, colo
         new_image.save(output_file)
 
 
-def generate_backs_of_cards(back_file_name, config: CardsConfig, file_paths):
+def generate_backs_of_cards(back_file_name: str, config: CardsConfig, file_paths: FilePaths):
     back = os.path.join(file_paths.resources_folder, back_file_name)
     images = []
     counter = 0
@@ -76,4 +77,4 @@ def generate_backs_of_cards(back_file_name, config: CardsConfig, file_paths):
         color = (158, 129, 97)
     elif "power" in folder_name:
         color = (65, 73, 90)
-    image_combiner(folder_name, images, config, color)
+    image_combiner(folder_name, images, config, file_paths, color)
