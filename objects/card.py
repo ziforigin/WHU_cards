@@ -34,7 +34,7 @@ class Deck:
     cards: list = list()
 
     def __init__(self, name, cards):
-        self.name = name
+        self.name = Deck.edit_deck_name(name)
         self.cards = cards
 
     def remove_card(self, card_name):
@@ -69,3 +69,11 @@ class Deck:
     def decode_from_dict(cls, name: str, dict_data: dict):
         cards = list(map(Card.decode_from_dict, dict_data["cards"]))
         return cls(name, cards)
+
+    @classmethod
+    def edit_deck_name(cls, deck_name):
+        if len(deck_name) > 25:
+            result_deck_name = deck_name[0:24]
+        else:
+            result_deck_name = deck_name
+        return result_deck_name

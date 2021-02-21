@@ -1,44 +1,32 @@
 import os
-import uuid
 
 from PIL import Image
 
-from config import CardsConfig
-from deck_utils import load_deck
+from config import DeckConfig
 from filepaths_dto import FilePaths
 from folder_factory import create_all_dirs_along_file_path
+from objects.card import Deck
 
 
 def chunks(file_list, length):
     for i in range(0, len(file_list), length):
         yield file_list[i:i + length]
 
-def merge_to_print_all_decks(config: CardsConfig, file_paths: FilePaths):
-    objective_cards_list, gambit_cards_list = list(), list()
-    decks = os.listdir(file_paths.decks_folder)
+
+def merge_to_print_deck(deck_obj: Deck, config: DeckConfig, file_paths: FilePaths):
+    objective_cards_list, power_cards_list = list(), list()
     create_all_dirs_along_file_path(file_paths.for_printing_folder)
-    result_deck_name = str()
-    for deck_file in decks:
-        file_name = deck_file.replace(".json", "")
-        deck_obj = load_deck(file_name, file_paths.decks_folder)
-        merge_all_cards_to_print(deck_obj, objective_cards_list, gambit_cards_list, file_paths.output_folder)
-        result_deck_name += deck_obj.name[0:3] + '_'
-    if len(result_deck_name) > 20:
-        result_deck_name = str(uuid.uuid4())
-    obj_name, gambit_name = result_deck_name + '_object_', result_deck_name + '_gambit_'
-    image_combiner(obj_name, objective_cards_list, config, file_paths)
-    image_combiner(gambit_name, gambit_cards_list, config, file_paths)
-
-
-def merge_all_cards_to_print(deck_object, objective_cards_list, gambit_cards_list, output_folder):
-    for card in deck_object.cards:
+    for card in deck_obj.cards:
         if card.card_type == 'objective':
-            objective_cards_list.append(os.path.join(output_folder, card.image_url))
+            objective_cards_list.append(os.path.join(file_paths.output_folder, card.image_url))
         else:
-            gambit_cards_list.append(os.path.join(output_folder, card.image_url))
+            power_cards_list.append(os.path.join(file_paths.output_folder, card.image_url))
+    obj_name, power_name = deck_obj.name + '_object_', deck_obj.name + '_power_'
+    image_combiner(obj_name, objective_cards_list, config, file_paths)
+    image_combiner(power_name, power_cards_list, config, file_paths)
 
 
-def image_combiner(name: str, images_list, config: CardsConfig, file_paths: FilePaths, color=(255, 255, 255)):
+def image_combiner(name: str, images_list, config: DeckConfig, file_paths: FilePaths, color=(255, 255, 255)):
     y_offset = 0
     canvas_height = int(config.card_height * (config.cards_on_page / config.cards_in_row) + config.gap_size * 2)
     canvas_width = int(config.card_width * config.cards_in_row + config.gap_size * 2)
@@ -64,17 +52,35 @@ def image_combiner(name: str, images_list, config: CardsConfig, file_paths: File
         new_image.save(output_file)
 
 
-def generate_backs_of_cards(back_file_name: str, config: CardsConfig, file_paths: FilePaths):
-    back = os.path.join(file_paths.resources_folder, back_file_name)
+def generate_backs_of_cards(file_name: str, for_printing_file_path: str, config: DeckConfig, file_paths: FilePaths, color: list):
+
+    while counter < config.cards_on_page:
+        images.append(back_file_path)
+        counter += 1
+    file_name = f"{config.name}_{card_type}"
+    if "objective" in file_name:
+        color = (158, 129, 97)
+    elif "power" in file_name:
+        color = (65, 73, 90)
+    image_combiner(file_name, images, config, file_paths, color)
+    image_combiner(name: str, images_list, config: DeckConfig, file_paths: FilePaths, color = (255, 255, 255)
+
+
+def generate_objective_cards_back(config: DeckConfig, file_paths: FilePaths):
     images = []
     counter = 0
-    while counter < config.cards_on_page:
-        images.append(back)
-        counter += 1
-    folder_name = back_file_name.split('.')
-    folder_name = folder_name[0]
-    if "objective" in folder_name:
-        color = (158, 129, 97)
-    elif "power" in folder_name:
-        color = (65, 73, 90)
-    image_combiner(folder_name, images, config, file_paths, color)
+    color = (158, 129, 97)
+    back_file_path = file_paths.objective_card_back
+    file_name = f"{config.name}_objectives_back"
+    obj_back_name = config.name + "objective-back.png"
+    generate_backs_of_cards(obj_back_name, config, file_paths)
+
+
+def generate_power_cards_back(config: DeckConfig, file_paths: FilePaths):
+    images = []
+    counter = 0
+    color = (65, 73, 90)
+    back_file_path = file_paths.power_card_back
+    obj_back_name = config.name + "powers_back.png"
+    generate_backs_of_cards(obj_back_name, config, file_paths)
+
