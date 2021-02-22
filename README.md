@@ -7,11 +7,9 @@ https://docs.python-guide.org/starting/install3/osx/
 pip install -r requirements.txt
 
 3) now you are ready to use the program! run:
-pytest -s -v main.py
+python main.py
 
-To add decks you want to download, add them to WHU_cards/resources/decks_list.json
-
-To change width\height\number of cards on a sheet change settings in WHU_cards/resources/config.json
+To add decks you want to download, add them to WHU_cards/resources/config.cfg
 
 All output will be stored in WHU_cards/output
 Sheets for printing in WHU_cards/output/for_printing
