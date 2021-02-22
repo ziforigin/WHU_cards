@@ -2,19 +2,19 @@ import configparser
 import logging
 
 
-def load_config(path_to_config):
+def load_config(path_to_config: str) -> configparser.ConfigParser:
     config = configparser.ConfigParser()
     config.read(path_to_config)
     return config
 
 
-def load_decks(path_to_config):
+def load_decks(path_to_config: str) -> list:
     logging.info(f'Loadning decks from config file')
     config = load_config(path_to_config)
     decks_list = []
     for deck_name in config.sections():
         decks_list.append(DeckConfig(path_to_config, deck_name))
-        logging.info(f'Found deck{deck_name}')
+        logging.info(f'Found deck: {deck_name}')
     return decks_list
 
 
