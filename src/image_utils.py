@@ -57,27 +57,24 @@ def image_combiner(name: str, images_list: list, config: DeckConfig, file_paths:
 
 
 def generate_objective_cards_back(config: DeckConfig, file_paths: FilePaths):
+    color = (158, 129, 97)
+    file_name = f"{config.name}_objective_backs.png"
+    generate_cards_back(config, file_paths, color, file_name)
+
+
+def generate_power_cards_back(config: DeckConfig, file_paths: FilePaths):
+    color = (65, 73, 90)
+    file_name = f"{config.name}_power_backs.png"
+    generate_cards_back(config, file_paths, color, file_name)
+
+
+def generate_cards_back(config: DeckConfig, file_paths: FilePaths, color: tuple, file_name: str):
     images = []
     counter = 0
-    color = (158, 129, 97)
     back_file_path = file_paths.objective_card_back
     while counter < (config.cards_in_column * config.cards_in_row):
         images.append(back_file_path)
         counter += 1
-    file_name = f"{config.name}_objective_backs.png"
-    logging.info(f'Generating card backs {file_name}')
-    image_combiner(file_name, images, config, file_paths, color)
-
-
-def generate_power_cards_back(config: DeckConfig, file_paths: FilePaths):
-    images = []
-    counter = 0
-    color = (65, 73, 90)
-    back_file_path = file_paths.power_card_back
-    while counter < (config.cards_in_column * config.cards_in_row):
-        images.append(back_file_path)
-        counter += 1
-    file_name = f"{config.name}_power_backs.png"
     logging.info(f'Generating card backs {file_name}')
     image_combiner(file_name, images, config, file_paths, color)
 
