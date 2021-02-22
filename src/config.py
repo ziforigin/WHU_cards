@@ -35,4 +35,4 @@ class DeckConfig:
         self.card_height = int(config[deck_name]['card_height'])
         self.gap_size = int(config[deck_name]['gap_size'])
         self.cards_in_row = int(config[deck_name]['cards_in_row'])
-        self.cards_on_page = int(config[deck_name]['cards_on_page'])
+        self.cards_in_column = int(config[deck_name]['cards_in_column'])

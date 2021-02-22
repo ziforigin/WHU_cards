@@ -31,10 +31,10 @@ def merge_to_print_deck(deck_obj: Deck, config: DeckConfig, file_paths: FilePath
 
 def image_combiner(name: str, images_list: list, config: DeckConfig, file_paths: FilePaths, color=(255, 255, 255)):
     y_offset = 0
-    canvas_height = int(config.card_height * (config.cards_on_page / config.cards_in_row) + config.gap_size * 2)
+    canvas_height = int(config.card_height * config.cards_in_column + config.gap_size * 2)
     canvas_width = int(config.card_width * config.cards_in_row + config.gap_size * 2)
     chunk_counter = 0
-    images = list(chunks(images_list, config.cards_on_page))
+    images = list(chunks(images_list, config.cards_in_column*config.cards_in_row ))
     canvas_size = tuple([canvas_width, canvas_height])
     card_size: tuple = tuple([config.card_width, config.card_height])
     for big_chunk in images:
@@ -61,7 +61,7 @@ def generate_objective_cards_back(config: DeckConfig, file_paths: FilePaths):
     counter = 0
     color = (158, 129, 97)
     back_file_path = file_paths.objective_card_back
-    while counter < config.cards_on_page:
+    while counter < (config.cards_in_column * config.cards_in_row):
         images.append(back_file_path)
         counter += 1
     file_name = f"{config.name}_objective_backs.png"
@@ -74,7 +74,7 @@ def generate_power_cards_back(config: DeckConfig, file_paths: FilePaths):
     counter = 0
     color = (65, 73, 90)
     back_file_path = file_paths.power_card_back
-    while counter < config.cards_on_page:
+    while counter < (config.cards_in_column * config.cards_in_row):
         images.append(back_file_path)
         counter += 1
     file_name = f"{config.name}_power_backs.png"

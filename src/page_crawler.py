@@ -10,6 +10,7 @@ card_types = {
     'upgrade': 3
 }
 
+
 def open_deck_page(deck_config):
     page = requests.get(deck_config.link)
     soup = BeautifulSoup(page.content, 'html.parser')
