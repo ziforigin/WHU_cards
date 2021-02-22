@@ -3,12 +3,18 @@ import requests
 from bs4 import BeautifulSoup
 
 from src.card import Card
+from src.config import DeckConfig
 
 card_types = {
     'objective': 1,
     'ploy': 2,
     'upgrade': 3
 }
+
+
+def parse_all_cards_in_deck(deck_config: DeckConfig) -> list:
+    page = load_deck_page_to_memory(deck_config)
+    return parse_and_serialize_all_cards_on_page(page)
 
 
 def load_deck_page_to_memory(deck_config) -> BeautifulSoup:

@@ -1,6 +1,24 @@
 import logging
 import os
 
+from src.config import DeckConfig
+from src.filepaths_dto import FilePaths
+
+
+def create_output_folders(file_paths: FilePaths):
+    create_folder(file_paths.output_folder)
+    create_folder(file_paths.cards_folder)
+    create_folder(file_paths.for_printing_folder)
+
+
+def create_deck_folder(file_paths: FilePaths, config: DeckConfig):
+    deck_folder = generate_deck_folder_path(file_paths, config)
+    create_folder(deck_folder)
+
+
+def generate_deck_folder_path(file_paths: FilePaths, config: DeckConfig) -> str:
+    return os.path.join(file_paths.for_printing_folder, config.name)
+
 
 def create_folder(folder: str):
     if not os.path.exists(folder):

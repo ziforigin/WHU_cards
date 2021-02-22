@@ -23,10 +23,6 @@ def divide_list_to_chunks(file_list: list, length: int) -> list:
         yield file_list[i:i + length]
 
 
-def generate_deck_folder_path(file_paths: FilePaths, config: DeckConfig) -> str:
-    return os.path.join(file_paths.for_printing_folder, config.name)
-
-
 def separate_objective_cards(cards: list, file_paths: FilePaths) -> list:
     logging.info(f'Separating objective cards')
     objective_cards = []
