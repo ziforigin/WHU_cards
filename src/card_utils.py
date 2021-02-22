@@ -2,8 +2,8 @@ import logging
 import os
 import requests
 
-from folder_factory import create_all_dirs_along_file_path
-from objects.card import Card
+from src.folder_factory import create_all_dirs_along_file_path
+from src.card import Card
 
 
 def save_card_image(card: Card, output_folder):

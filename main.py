@@ -1,11 +1,7 @@
-import config
-import filepaths_dto
-import logger
-from card_utils import save_all_cards_images_for_deck
-from folder_factory import create_output_folder, create_folders
-from image_utils import merge_to_print_deck, generate_objective_cards_back, generate_power_cards_back
-from objects import card
-from pages import page_crawler
+from src.card_utils import save_all_cards_images_for_deck
+from src.folder_factory import create_output_folder, create_folders
+from src.image_utils import merge_to_print_deck, generate_objective_cards_back, generate_power_cards_back
+from src import page_crawler, config, logger, filepaths_dto, card
 
 
 def download_all_cards():
