@@ -33,7 +33,7 @@ def separate_objective_cards(cards: list, file_paths: FilePaths) -> list:
 
 
 def separate_power_cards(cards: list, file_paths: FilePaths) -> list:
-    logging.info(f'Separating objective cards')
+    logging.info(f'Separating power cards')
     power_cards = []
     for card in cards:
         if card.card_type != 'objective':
