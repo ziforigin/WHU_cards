@@ -29,10 +29,16 @@ def create_folder(folder: str):
             logging.error(f'Unable to create folder {folder}', exc_info=e)
 
 
+def remove_file_name_from_path(file_path):
+    file_name = os.path.basename(file_path)
+    return file_path.replace(file_name, '')
+
+
 def create_all_dirs_along_file_path(file_path):
-    if not os.path.exists(file_path):
-        logging.info(f'Creating folder along the path {file_path}')
+    folder_path = remove_file_name_from_path(file_path)
+    if not os.path.exists(folder_path):
+        logging.info(f'Creating folder along the path {folder_path}')
         try:
             os.makedirs(os.path.dirname(file_path))
         except IOError as e:
-            logging.error(f'Unable to create folders along the path {file_path}', exc_info=e)
+            logging.error(f'Unable to create folders along the path {folder_path}', exc_info=e)
