@@ -1,25 +1,22 @@
-from src.card_utils import save_all_cards_images_for_deck
-from src.folder_factory import create_output_folder, create_folders
-from src.image_utils import merge_to_print_deck, generate_objective_cards_back, generate_power_cards_back
-from src import page_crawler, config, logger, filepaths_dto, card
+from src.card_image_utils import save_all_cards_images_for_deck
+from src.folder_utils import create_folder
+from src.card_sheet_utils import prepare_cards_for_printing, generate_deck_folder_path
+from src import page_crawler, config, logger, filepaths_dto
 
 
-def download_all_cards():
-    file_paths = filepaths_dto.FilePaths()
-    logger.configure_logger(file_paths)
-    create_output_folder(file_paths.output_folder)
-    create_folders(file_paths.output_folder, [file_paths.cards_folder, file_paths.for_printing_folder])
-    decks = config.load_decks(file_paths.config_path)
-    for deck_config in decks:
-        page = page_crawler.open_deck_page(deck_config)
-        cards_dict = page_crawler.gather_all_cards_of_a_deck_by_card_type(page)
-        deck_obj = card.Deck(deck_config.name, cards_dict)
-        save_all_cards_images_for_deck(deck_obj, file_paths)
-        merge_to_print_deck(deck_obj, deck_config, file_paths)
-        generate_objective_cards_back(deck_config, file_paths)
-        generate_power_cards_back(deck_config, file_paths)
+file_paths = filepaths_dto.FilePaths()
+logger.configure_logger(file_paths)
+create_folder(file_paths.output_folder)
+create_folder(file_paths.cards_folder)
+create_folder(file_paths.for_printing_folder)
+decks = config.load_decks(file_paths.config_path)
+for deck_config in decks:
+    page = page_crawler.load_deck_page_to_memory(deck_config)
+    cards = page_crawler.parse_and_serialize_all_cards_on_page(page)
+    save_all_cards_images_for_deck(cards, file_paths)
+    deck_folder = generate_deck_folder_path(file_paths, deck_config)
+    create_folder(deck_folder)
+    prepare_cards_for_printing(cards, deck_config, file_paths)
 
-
-download_all_cards()
 
 
