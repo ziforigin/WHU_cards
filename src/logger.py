@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from filepaths_dto import FilePaths
+from src.filepaths_dto import FilePaths
 
 
 def configure_logger(file_path: FilePaths):

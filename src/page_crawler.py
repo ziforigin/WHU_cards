@@ -2,7 +2,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
-from objects.card import Card
+from src.card import Card
 
 card_types = {
     'objective': 1,

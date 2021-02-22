@@ -13,8 +13,8 @@ class FilePaths:
 
     def __init__(self):
         file_path = os.path.dirname(__file__)
-        self.output_folder = os.path.join(file_path, './output')
-        self.resources_folder = os.path.join(file_path, './resources')
+        self.output_folder = os.path.join(file_path, '.././output')
+        self.resources_folder = os.path.join(file_path, '.././resources')
         self.cards_folder = os.path.join(self.output_folder, 'cards')
         self.for_printing_folder = os.path.join(self.output_folder, 'for_printing')
         self.config_path = os.path.join(self.resources_folder, 'config.cfg')

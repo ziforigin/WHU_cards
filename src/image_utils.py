@@ -3,10 +3,10 @@ import os
 
 from PIL import Image
 
-from config import DeckConfig
-from filepaths_dto import FilePaths
-from folder_factory import create_folders
-from objects.card import Deck
+from src.config import DeckConfig
+from src.filepaths_dto import FilePaths
+from src.folder_factory import create_folders
+from src.card import Deck
 
 
 def chunks(file_list, length):
