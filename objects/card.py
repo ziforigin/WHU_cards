@@ -1,7 +1,3 @@
-from enum import Enum
-import json
-
-
 class Card:
     name: str = None
     image_url: str = None

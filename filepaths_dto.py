@@ -9,6 +9,7 @@ class FilePaths:
     config_path: str
     objective_card_back: str
     power_card_back: str
+    log_path: str
 
     def __init__(self):
         file_path = os.path.dirname(__file__)
@@ -19,3 +20,4 @@ class FilePaths:
         self.config_path = os.path.join(self.resources_folder, 'config.cfg')
         self.objective_card_back = os.path.join(self.resources_folder, 'objective-back.png')
         self.power_card_back = os.path.join(self.resources_folder, 'power-back.png')
+        self.log_path = os.path.join(self.output_folder, 'example.log')

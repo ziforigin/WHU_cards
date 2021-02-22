@@ -1,3 +1,4 @@
+import logging
 import os
 
 from PIL import Image
@@ -14,6 +15,7 @@ def chunks(file_list, length):
 
 
 def merge_to_print_deck(deck_obj: Deck, config: DeckConfig, file_paths: FilePaths):
+    logging.info(f'Merging cards to sheets for deck {config.name}')
     objective_cards_list, power_cards_list = list(), list()
     output_folder = os.path.join(file_paths.for_printing_folder, config.name)
     create_folders(file_paths.for_printing_folder, [output_folder])
@@ -63,6 +65,7 @@ def generate_objective_cards_back(config: DeckConfig, file_paths: FilePaths):
         images.append(back_file_path)
         counter += 1
     file_name = f"{config.name}_objective_backs.png"
+    logging.info(f'Generating card backs {file_name}')
     image_combiner(file_name, images, config, file_paths, color)
 
 
@@ -75,6 +78,7 @@ def generate_power_cards_back(config: DeckConfig, file_paths: FilePaths):
         images.append(back_file_path)
         counter += 1
     file_name = f"{config.name}_power_backs.png"
+    logging.info(f'Generating card backs {file_name}')
     image_combiner(file_name, images, config, file_paths, color)
 
 
